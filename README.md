@@ -32,6 +32,6 @@ Kan velge dato fra nåtid frem til 2030.
 - restrikte input. ikke lov med minus 1 gjester og rom
 - kan ikke ta dato tilbake i tid. og kan ikke ta dato til før dato fra
 - ordne "om oss" siden, "kontakt" siden
-
+- Gjøre slik at "main" er en blokk som endrer seg, slik at header, footer og bakgrunnsbilde er på alle sider, kun selve blokken som bytter side.
 
 ## Så bygge database.
