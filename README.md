@@ -15,4 +15,23 @@ Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 - Dere må tenke gjennom hva gjester (både de som bor ofte og av og til) og motelleierne ville satt pris på i et slik system, prioritere ønsker og implementere så mye som dere klarer gjennom godt programmeringshåndverk.
 
 ## Ekstra, ideer:
-- ???
+- forslag til andre alternativer hvis room er booka.
+
+## Romtyper:
+3 Suite : 5 pers
+5 Familierom : 4 pers
+10 Dobbeltrom : 2 pers
+7 Enkeltrom : 1 pers
+
+plass til totalt 52 pers.
+
+Kan velge dato fra nåtid frem til 2030.
+
+## Videre på Index.php:
+- fikse opp i css.
+- restrikte input. ikke lov med minus 1 gjester og rom
+- kan ikke ta dato tilbake i tid. og kan ikke ta dato til før dato fra
+- ordne "om oss" siden, "kontakt" siden
+
+
+## Så bygge database.
