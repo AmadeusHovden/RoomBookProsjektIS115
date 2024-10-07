@@ -18,6 +18,8 @@
     </header>
     <main>
         <h1>Hotell til deg og dine</h1>
+        <!-- må fikse så knapper er rette, den hvite boksen skal være i midten.-->
+            <!-- også lage regler for antall gjester, og hviklke datoer som r godkjent, PHP?-->
         <section class="hero">
             <form class="booking-form">
                 <div class="input-group">
@@ -36,5 +38,11 @@
             </form>
         </section>
     </main>
+
+<!-- mer relevant i footer.-->
+    <footer>
+        <img src="bilder/logo2.png" alt="Hotel Logo" class="logo">
+    </footer>
+    
 </body>
 </html>
