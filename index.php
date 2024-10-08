@@ -7,42 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <img src="bilder/logo.png" alt="Hotel Logo" class="logo">
-        </div>
-        <nav class="header-right">
-            <a href="om-oss.html">Om oss</a>
-            <a href="kontakt.html">Kontakt</a>
-        </nav>
-    </header>
+<body>
+    <?php include 'header.php'; ?>
+
     <main>
-        <h1>Hotell til deg og dine</h1>
-        <!-- må fikse så knapper er rette, den hvite boksen skal være i midten.-->
-            <!-- også lage regler for antall gjester, og hviklke datoer som r godkjent, PHP?-->
-        <section class="hero">
-            <form class="booking-form">
-                <div class="input-group">
-                    <label for="date">Dato Fra:</label>
-                    <input type="date" id="date" placeholder="Velg dato">
-                </div>
-                <div class="input-group">
-                    <label for="date">Dato Til:</label>
-                    <input type="date" id="date" placeholder="Velg dato">
-                </div>
-                <div class="input-group">
-                    <label for="guests">Antall gjester</label>
-                    <input type="number" id="guests" placeholder="2">
-                </div>
-                <button type="submit" class="search-button">Søk</button>
-            </form>
-        </section>
+        <?php
+        // Get the 'page' parameter from the URL, default to 'hjem/home' if not set
+        $page = isset($_GET['page']) ? $_GET['page'] : 'hjem/home';
+
+        // Sanitize the input to prevent directory traversal attacks
+        $page = str_replace(['../', '..\\', './', '.\\'], '', $page);
+
+        // Construct the file path
+        $file = $page . '.php';
+
+        // Check if the file exists before including
+        if (file_exists($file)) {
+            include $file;
+        } else {
+            // Display a 404 error or a default page
+            echo '<h1>404 Page not found</h1>';
+        }
+        ?>
     </main>
 
-<!-- mer relevant i footer.-->
-    <footer>
-        <img src="bilder/logo2.png" alt="Hotel Logo" class="logo">
-    </footer>
-    
+    <?php include 'footer.php'; ?>
 </body>
 </html>
