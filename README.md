@@ -2,7 +2,7 @@
 Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 
 
-## Oppgaven:
+### Oppgaven:
 - lite motell med 25 rom til sammen. 
 - Motellet må ha minimum tre forskjellige romtyper, f.eks. enkeltrom, dobbeltrom og junior suite. 
 - Hver romtype må ha en begrensning på hvor mange som kan bo der (voksne og barn). Dette vil kreve en forståelse av variabler, funksjoner, matriser og andre grunnleggende PHP-konsepter samt brukergrensesnitt.
@@ -14,9 +14,13 @@ Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 
 - Dere må tenke gjennom hva gjester (både de som bor ofte og av og til) og motelleierne ville satt pris på i et slik system, prioritere ønsker og implementere så mye som dere klarer gjennom godt programmeringshåndverk.
 
+
+
 ## Ekstra, ideer:
 - forslag til andre alternativer hvis room er booka.
 - Sending av skjema, på kontakt siden. 
+- nærme trapp/heis ?
+- annet som må være i hotell-system?
 
 ## Romtyper:
 3 Suite : 5 pers (2.etasje)
@@ -28,8 +32,17 @@ plass til totalt 52 pers.
 
 Kan velge dato fra nåtid frem til 2030.
 
+etter søk på rommene med dato, Gi bruker mulighet til å filtrere, både 1 eller 2 etasje, og nærme eller ikke nærme heis.
+
 ## Videre på Index.php:
 - fikse opp i css. (kun hero bokseb foreløpig)
 
 ## Så bygge database.
 - huske antall rom, etasje, typ rom, hvor mange folk. begrensing til 2030. mer?
+
+## Brukere?
+- enten logge inn eller registrere bruker på toppen av siden (før booking)
+- velge og ordne booking så registrer seg eller logge inn som bekreftelse. (etter booking).
+- mulighet til å se alle bookinger.
+- Lojalitetsprogram, billigere pris etter flere bookinger. Etter 5 bookinger, halv pris på suite?
+
