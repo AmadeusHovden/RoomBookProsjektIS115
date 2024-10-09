@@ -16,6 +16,7 @@ Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 
 ## Ekstra, ideer:
 - forslag til andre alternativer hvis room er booka.
+- Ordne kontakt siden, med php og faktisk sending av skjema.
 
 ## Romtyper:
 3 Suite : 5 pers
