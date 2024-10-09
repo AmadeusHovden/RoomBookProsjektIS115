@@ -16,23 +16,20 @@ Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 
 ## Ekstra, ideer:
 - forslag til andre alternativer hvis room er booka.
-- Ordne kontakt siden, med php og faktisk sending av skjema.
+- Sending av skjema, på kontakt siden. 
 
 ## Romtyper:
-3 Suite : 5 pers
-5 Familierom : 4 pers
-10 Dobbeltrom : 2 pers
-7 Enkeltrom : 1 pers
+3 Suite : 5 pers (2.etasje)
+5 Familierom : 4 pers (2.etasje)
+10 Dobbeltrom : 2 pers (1.etasje)
+7 Enkeltrom : 1 pers (1.etasje)
 
 plass til totalt 52 pers.
 
 Kan velge dato fra nåtid frem til 2030.
 
 ## Videre på Index.php:
-- fikse opp i css.
-- restrikte input. ikke lov med minus 1 gjester og rom
-- kan ikke ta dato tilbake i tid. og kan ikke ta dato til før dato fra
-- ordne "om oss" siden, "kontakt" siden
-- Gjøre slik at "main" er en blokk som endrer seg, slik at header, footer og bakgrunnsbilde er på alle sider, kun selve blokken som bytter side.
+- fikse opp i css. (kun hero bokseb foreløpig)
 
 ## Så bygge database.
+- huske antall rom, etasje, typ rom, hvor mange folk. begrensing til 2030. mer?
