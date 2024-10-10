@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="site/css/styles.css">
 </head>
 <body>
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'site/inc/header.php'; ?>
 
     <main>
         <?php
         // Get the 'page' parameter from the URL, default to 'hjem/home' if not set
-        $page = isset($_GET['page']) ? $_GET['page'] : 'hjem/home';
+        $page = isset($_GET['page']) ? $_GET['page'] : 'site/hjem/home';
 
         // Sanitize the input to prevent directory traversal attacks
         $page = str_replace(['../', '..\\', './', '.\\'], '', $page);
@@ -26,12 +26,12 @@
             include $file;
         } else {
             // Display a 404 error or a default page
-            echo '<h1>404 Page not found</h1>';
+            echo '<h1>404 Page not found Kake</h1>';
         }
         ?>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'site/inc/footer.php'; ?>
 </body>
 </html>
 

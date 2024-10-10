@@ -11,7 +11,7 @@
         </div>
 
         <div class="bilde">
-            <img src="bilder/om.jpg" alt="Norkap Luxury Hotel" class="hotel-bilde">
+            <img src="site/img/om.jpg" alt="Norkap Luxury Hotel" class="hotel-bilde">
         </div>
     </div>
 
