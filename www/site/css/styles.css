@@ -51,7 +51,7 @@ header {
 main {
     width: 100%;
     flex: 1; /* Dette gjør at main tar opp all tilgjengelig plass */
-    background-image: url('bilder/bakgrunn.jpg');
+    background-image: url('../img/bakgrunn.jpg');
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
