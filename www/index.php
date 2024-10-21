@@ -12,21 +12,21 @@
 
     <main>
         <?php
-        // Get the 'page' parameter from the URL, default to 'hjem/home' if not set
+        // Henter "page" paramter fra URL'en, default er hjem/home
         $page = isset($_GET['page']) ? $_GET['page'] : 'site/hjem/home';
 
-        // Sanitize the input to prevent directory traversal attacks
+        // Renser inputen for å forhindre angreå, (EKSTRA)
         $page = str_replace(['../', '..\\', './', '.\\'], '', $page);
 
-        // Construct the file path
+        // Konstruerer filbanen
         $file = $page . '.php';
 
-        // Check if the file exists before including
+        // Sjekker om filen finnes, før den inkluderer
         if (file_exists($file)) {
             include $file;
         } else {
-            // Display a 404 error or a default page
-            echo '<h1>404 Page not found Kake</h1>';
+            // Viser 404 error siden, eller default siden.
+            echo '<h1>404 Finner ikke sia</h1>';
         }
         ?>
     </main>

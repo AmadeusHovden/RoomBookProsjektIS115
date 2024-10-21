@@ -1,9 +1,11 @@
+/* Generelle stil-regler, for hele siden*/
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/*Stiler for alt i body, SKRIFT! */
 body {
     margin: 0;
     font-family: monospace;
@@ -15,6 +17,7 @@ body {
     min-height: 100vh; /* Sørger for at body dekker hele høyden av vinduet */
 }
 
+/*Masse for å style headeren, slik at det blir riktig med lenker og logo*/
 header {
     width: 100%;
     display: flex;
@@ -48,6 +51,7 @@ header {
     text-decoration: underline;
 }
 
+/*Stiler for mainblokken*/
 main {
     width: 100%;
     flex: 1; /* Dette gjør at main tar opp all tilgjengelig plass */
