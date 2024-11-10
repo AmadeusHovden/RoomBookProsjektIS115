@@ -116,6 +116,20 @@ h1 {
     background-color: rgb(128, 85, 52);
 }
 
+.room-button{
+    padding: 15px 30px;
+    background-color: rgb(200, 126, 62);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.room-button:hover {
+    background-color: rgb(191, 87, 7);
+}
+
 .hero-content {
     display: flex;
     padding: 30px;
@@ -179,7 +193,7 @@ input, textarea, select {
 }
 
 .rom-bilde {
-    height: 250px;
+    height: 150px;
     border-radius: 10px;
     margin-right: 20px;
 }
@@ -195,8 +209,40 @@ input, textarea, select {
     }
 
     .rom-bilde {
-        height: 250px;
+        height: 150px;
         margin-right: 0;
     }
 }
 
+/* Endre layout av skjemaet på mindre skjermer */
+@media (max-width: 700px) {
+    .booking-form {
+        flex-direction: row; /* Legg alle input-feltene horisontalt */
+        flex-wrap: wrap; /* Tillater at søk-knappen flytter seg til en ny linje */
+        justify-content: center; /* Sentrer innholdet i skjemaet */
+    }
+
+    .search-button {
+        width: 80%; /* Sørg for at søk-knappen dekker hele bredden under feltene */
+    }
+}
+
+/* Bookingdetaljer-stiler */
+.booking-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.booking-summary h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.booking-summary p {
+    font-size: 18px;
+    margin: 5px 0;
+}

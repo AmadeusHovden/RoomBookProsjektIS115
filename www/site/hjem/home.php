@@ -1,8 +1,8 @@
-<h1>Hotell til deg og dine</h1>
+<h1>Booking</h1>
 
 <section class="hero">
-    <!-- Endre action slik at skjemaet sender brukeren til riktig URL -->
-    <form class="booking-form" method="post" action="index.php?page=site/pages/booking">
+    <!-- Skjema som sender brukeren til riktig URL -->
+    <form class="booking-form" method="post" action="index.php?page=site/booking/booking">
         <div class="input-group">
             <label for="date-from">Dato Fra:</label>
             <input type="date" id="date-from" name="date-from" placeholder="Velg dato" required
@@ -16,9 +16,15 @@
         </div>
 
         <div class="input-group">
-            <label for="guests">Antall gjester:</label>
-            <input type="number" id="guests" name="guests" placeholder="2" min="1" required
-                   value="<?php echo isset($_POST['guests']) ? $_POST['guests'] : ''; ?>">
+            <label for="adults">Antall voksne:</label>
+            <input type="number" id="adults" name="adults" placeholder="1" min="1" required
+                   value="<?php echo isset($_POST['adults']) ? $_POST['adults'] : ''; ?>">
+        </div>
+
+        <div class="input-group">
+            <label for="children">Antall barn:</label>
+            <input type="number" id="children" name="children" placeholder="0" min="0" required
+                   value="<?php echo isset($_POST['children']) ? $_POST['children'] : '0'; ?>">
         </div>
 
         <button type="submit" class="search-button">Søk</button>
@@ -31,7 +37,8 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dateFrom = $_POST['date-from'];
         $dateTo = $_POST['date-to'];
-        $guests = $_POST['guests'];
+        $adults = $_POST['adults'];
+        $children = $_POST['children'];
         $errorMessage = '';
 
         // Konverter datoene til DateTime-objekter
@@ -47,9 +54,12 @@
         if ($dateToObj <= $dateFromObj) {
             $errorMessage .= "Dato Til må være senere enn Dato Fra.<br>";
         }
-        // Sjekk at antall gjester er gyldig
-        if ($guests < 1) {
-            $errorMessage .= "Antall gjester må være minst 1.<br>";
+        // Sjekk at antall voksne og barn er gyldig
+        if ($adults < 1) {
+            $errorMessage .= "Antall voksne må være minst 1.<br>";
+        }
+        if ($children < 0) {
+            $errorMessage .= "Antall barn kan ikke være negativt.<br>";
         }
 
         // Hvis det er noen feil, vis dem
@@ -62,7 +72,6 @@
     }
     ?>
 </section>
-
 
 <!-- JavaScript for å sikre at datoene er gyldige -->
 <script>
