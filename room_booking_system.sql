@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 08. Nov, 2024 15:46 PM
+-- Generation Time: 10. Nov, 2024 14:05 PM
 -- Tjener-versjon: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,13 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `room_id` int(11) NOT NULL,
   `check_in` date NOT NULL,
   `check_out` date NOT NULL,
   `adults` int(11) NOT NULL,
   `children` int(11) NOT NULL,
-  `total_guests` int(11) GENERATED ALWAYS AS (`adults` + `children`) STORED,
   `total_price` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -62,15 +61,44 @@ CREATE TABLE `loyalty` (
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
   `room_type` enum('suite','family','double','single') NOT NULL,
-  `description` text DEFAULT NULL,
   `floor` int(11) NOT NULL,
-  `near_elevator` tinyint(1) DEFAULT 0,
+  `near_elevator` tinyint(1) DEFAULT NULL,
   `max_adults` int(11) NOT NULL,
   `max_children` int(11) NOT NULL,
-  `max_occupancy` int(11) GENERATED ALWAYS AS (`max_adults` + `max_children`) STORED,
   `price_per_night` decimal(10,2) NOT NULL,
   `availability` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dataark for tabell `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `room_type`, `floor`, `near_elevator`, `max_adults`, `max_children`, `price_per_night`, `availability`) VALUES
+(1, 'suite', 2, 1, 5, 2, 3000.00, 1),
+(2, 'suite', 2, 0, 5, 2, 3000.00, 1),
+(3, 'suite', 2, 1, 5, 2, 3000.00, 1),
+(4, 'family', 2, 1, 4, 2, 2000.00, 1),
+(5, 'family', 1, 0, 4, 2, 2000.00, 1),
+(6, 'family', 2, 0, 4, 2, 2000.00, 1),
+(7, 'family', 1, 1, 4, 2, 2000.00, 1),
+(8, 'family', 2, 0, 4, 2, 2000.00, 1),
+(9, 'double', 1, 1, 2, 1, 1500.00, 1),
+(10, 'double', 2, 0, 2, 1, 1500.00, 1),
+(11, 'double', 1, 0, 2, 1, 1500.00, 1),
+(12, 'double', 2, 1, 2, 1, 1500.00, 1),
+(13, 'double', 1, 1, 2, 1, 1500.00, 1),
+(14, 'double', 2, 0, 2, 1, 1500.00, 1),
+(15, 'double', 1, 0, 2, 1, 1500.00, 1),
+(16, 'double', 2, 1, 2, 1, 1500.00, 1),
+(17, 'double', 1, 1, 2, 1, 1500.00, 1),
+(18, 'double', 2, 0, 2, 1, 1500.00, 1),
+(19, 'single', 1, 1, 1, 0, 1000.00, 1),
+(20, 'single', 2, 0, 1, 0, 1000.00, 1),
+(21, 'single', 1, 0, 1, 0, 1000.00, 1),
+(22, 'single', 2, 1, 1, 0, 1000.00, 1),
+(23, 'single', 1, 1, 1, 0, 1000.00, 1),
+(24, 'single', 2, 0, 1, 0, 1000.00, 1),
+(25, 'single', 1, 1, 1, 0, 1000.00, 1);
 
 -- --------------------------------------------------------
 
@@ -81,9 +109,9 @@ CREATE TABLE `rooms` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` enum('guest','admin') DEFAULT 'guest',
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` enum('guest','loyalty','admin') DEFAULT 'guest',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -139,7 +167,7 @@ ALTER TABLE `loyalty`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -155,7 +183,7 @@ ALTER TABLE `users`
 -- Begrensninger for tabell `bookings`
 --
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE;
 
 --
