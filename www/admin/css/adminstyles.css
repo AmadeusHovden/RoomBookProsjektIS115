@@ -1,0 +1,80 @@
+/* Generelle stil-regler for admin-delen */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: monospace;
+    color: rgb(46, 44, 41);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+/*Stiler for mainblokken*/
+main {
+    width: 100%;
+    flex: 1; /* Dette gjør at main tar opp all tilgjengelig plass */
+    background-image: url('/img/bakgrunn.jpg');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 5px;
+}
+
+/* Hero-stil for innloggingsseksjonen */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    width: 100%;
+}
+
+/* Stil for innloggingsskjemaet */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(200, 200, 200, 0.8);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="email"], input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+}
+
+button.search-button {
+    padding: 15px 30px;
+    background-color: rgb(205, 159, 118);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button.search-button:hover {
+    background-color: rgb(128, 85, 52);
+}

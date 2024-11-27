@@ -1,18 +1,18 @@
 <h1>Booking</h1>
 
 <section class="hero">
-    <!-- Skjema som sender brukeren til riktig URL -->
-    <form class="booking-form" method="post" action="index.php?page=site/booking/booking">
+    <!-- Skjema som sender brukeren til RoomSearch.php -->
+    <form class="booking-form" method="post" action="index.php?page=site/booking/RoomSearch">
         <div class="input-group">
             <label for="date-from">Dato Fra:</label>
-            <input type="date" id="date-from" name="date-from" placeholder="Velg dato" required
-                   value="<?php echo isset($_POST['date-from']) ? $_POST['date-from'] : ''; ?>">
+            <input type="date" id="date-from" name="check_in" placeholder="Velg dato" required
+                   value="<?php echo isset($_POST['check_in']) ? $_POST['check_in'] : ''; ?>">
         </div>
 
         <div class="input-group">
             <label for="date-to">Dato Til:</label>
-            <input type="date" id="date-to" name="date-to" placeholder="Velg dato" required
-                   value="<?php echo isset($_POST['date-to']) ? $_POST['date-to'] : ''; ?>">
+            <input type="date" id="date-to" name="check_out" placeholder="Velg dato" required
+                   value="<?php echo isset($_POST['check_out']) ? $_POST['check_out'] : ''; ?>">
         </div>
 
         <div class="input-group">
@@ -35,23 +35,23 @@
     <!-- PHP-koden som validerer skjemaet -->
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $dateFrom = $_POST['date-from'];
-        $dateTo = $_POST['date-to'];
+        $checkIn = $_POST['check_in'];
+        $checkOut = $_POST['check_out'];
         $adults = $_POST['adults'];
         $children = $_POST['children'];
         $errorMessage = '';
 
         // Konverter datoene til DateTime-objekter
-        $dateFromObj = new DateTime($dateFrom);
-        $dateToObj = new DateTime($dateTo);
+        $checkInObj = new DateTime($checkIn);
+        $checkOutObj = new DateTime($checkOut);
         $today = new DateTime();
 
         // Sjekk at "Dato Fra" ikke er tidligere enn dagens dato
-        if ($dateFromObj < $today->setTime(0, 0, 0)) {
+        if ($checkInObj < $today->setTime(0, 0, 0)) {
             $errorMessage .= "Dato fra kan ikke være tidligere enn dagens dato.<br>";
         }
         // Sjekk at "Dato Til" er senere enn "Dato Fra"
-        if ($dateToObj <= $dateFromObj) {
+        if ($checkOutObj <= $checkInObj) {
             $errorMessage .= "Dato Til må være senere enn Dato Fra.<br>";
         }
         // Sjekk at antall voksne og barn er gyldig
@@ -66,8 +66,8 @@
         if (!empty($errorMessage)) {
             echo "<div class='error-message'>$errorMessage</div>";
         } else {
-            echo "Datoene og antall gjester er gyldige! Fortsett med booking.";
-            // Hvis skjemaet er gyldig, sendes data til booking.php
+            // Hvis skjemaet er gyldig, sendes data til RoomSearch.php
+            echo "<script>document.querySelector('.booking-form').submit();</script>";
         }
     }
     ?>

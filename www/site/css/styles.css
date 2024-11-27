@@ -20,7 +20,7 @@ body {
 /*Masse for å style headeren, slik at det blir riktig med lenker og logo*/
 header {
     width: 100%;
-    display: flex;
+    display: flex; 
     justify-content: space-between;
     align-items: center;
     padding: 20px;
