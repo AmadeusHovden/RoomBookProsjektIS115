@@ -34,15 +34,21 @@ Kan velge dato fra nåtid frem til 2030.
 
 etter søk på rommene med dato, Gi bruker mulighet til å filtrere, både 1 eller 2 etasje, og nærme eller ikke nærme heis.
 
-## Videre på Index.php:
-- fikse opp i css. (kun hero bokseb foreløpig)
-
-## Så bygge database.
-- huske antall rom, etasje, typ rom, hvor mange folk. begrensing til 2030. mer?
 
 ## Brukere?
-- enten logge inn eller registrere bruker på toppen av siden (før booking)
-- velge og ordne booking så registrer seg eller logge inn som bekreftelse. (etter booking).
-- mulighet til å se alle bookinger.
-- Lojalitetsprogram, billigere pris etter flere bookinger. Etter 5 bookinger, halv pris på suite?
+- Det skal være 3 BRUKERE: Admin (hotellarbeider), Gjest (noen som booker rom uten å registrere seg, men blir fortsatt lagt til med informasjon) og Bruker (en standard bruker som logger på eller har registrert seg)
+- ENeste måten å få rollen "gjest" er ved å booke et rom uten innlogging, da blir booking detelajer lagt i databasen som en "GJEST"
+- Det er samme logg inn for brukere, og admin, man bruker logginn form i headeren, som også lar en vanlig bruker registrere seg.
+- Når man er i booking prosessen så skal bruker bli spurt om de skal logge inn, eller om de fortsetter som gjest.
+- På profil siden sin skal en bruker kunne se Navnet sitt sant annen kontaktinfo og rolle, tidligere bookinger, med all info, kunne legge til bakgrunnsbilde med (modul 9).
+og man skal kunne endre passordet sitt, ved å bruke det gamle passordet.
+
+
+- Lojalitetsprogram, billigere pris etter flere bookinger, hvis man er logget inn som bruker. Etter 5 bookinger, halv pris på suite?
+
+- Admin sin profil side skal, kunne legge til nye admin brukere, dette ved å bytte rolle til en allerede registrert mail. Altså skrive inn mail (som allered må være i databasen) trykke på admin knapp, og rollen blir endret til admin, fra bruker. Admin side skal også kunne bytte passordet på sin bruker. 
+Men det viktigste en admin gjør er å bytte navn og informasjon på rommene, samt å gjøre rommene utilgjengelig, eller sette rommet til en allered registrert bruker email.
+
+
+
 
