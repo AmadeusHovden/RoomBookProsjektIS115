@@ -4,34 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking</title>
-    <link rel="stylesheet" href="site/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<body>
-    <?php include 'site/inc/header.php'; ?>
+    <?php include '../privat/Views/layouts/header.php'; ?>
 
     <main>
-        <?php
-        // Henter "page" paramter fra URL'en, default er hjem/home
-        $page = isset($_GET['page']) ? $_GET['page'] : 'site/hjem/home';
+    <?php
+session_start(); // Start session at the top of the file
 
-        // Renser inputen for å forhindre angreå, (EKSTRA)
-        $page = str_replace(['../', '..\\', './', '.\\'], '', $page);
+// Include necessary controllers
+require_once '../privat/Controllers/LoginController.php';
+require_once '../privat/Controllers/LogoutController.php';
 
-        // Konstruerer filbanen
-        $file = $page . '.php';
+$page = $_GET['page'] ?? 'home';
 
-        // Sjekker om filen finnes, før den inkluderer
-        if (file_exists($file)) {
-            include $file;
+switch ($page) {
+    case 'home':
+        require '../privat/Views/pages/home.php';
+        break;
+    case 'allrooms':
+        require '../privat/Views/pages/allrooms.php';
+        break;
+    case 'about':
+        require '../privat/Views/pages/about.php';
+        break;
+    case 'contact':
+        require '../privat/Views/pages/contact.php';
+        break;
+    case 'login':
+        $controller = new LoginController();
+        $controller->login();
+        break;
+    case 'logout':
+        $controller = new LogoutController();
+        $controller->logout();
+        break;
+    case 'admin/profile':
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            require '../privat/Views/admin/profile.php';
         } else {
-            // Viser 404 error siden, eller default siden.
-            echo '<h1>404 Finner ikke sia</h1>';
+            header("Location: index.php?page=login");
+            exit();
         }
+        break;
+    case 'user/profile':
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'bruker') {
+            require '../privat/Views/user/profile.php';
+        } else {
+            header("Location: index.php?page=login");
+            exit();
+        }
+        break;
+    default:
+        echo '<h1>404 - Page Not Found</h1>';
+        break;
+}
         ?>
     </main>
 
-    <?php include 'site/inc/footer.php'; ?>
+    <?php include '../privat/Views/layouts/footer.php'; ?>
 </body>
 </html>
-
