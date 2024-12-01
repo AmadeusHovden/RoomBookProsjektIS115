@@ -1,14 +1,19 @@
 <?php
 class LoginController {
-    public function login() {
-        require_once '../privat/Models/db.php';
+    private $pdo;
 
+    // Constructor to inject the $pdo object
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+
+    public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = trim($_POST['email']);
             $password = $_POST['password'];
 
             // Fetch the user from the database
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -23,7 +28,7 @@ class LoginController {
                 // Verify the password
                 if (password_verify($password, $user['password'])) {
                     // Reset failed attempts
-                    $stmt = $pdo->prepare("UPDATE users SET failed_attempts = 0, lock_time = NULL WHERE id = ?");
+                    $stmt = $this->pdo->prepare("UPDATE users SET failed_attempts = 0, lock_time = NULL WHERE id = ?");
                     $stmt->execute([$user['id']]);
 
                     // Set session variables
@@ -40,7 +45,7 @@ class LoginController {
                     exit();
                 } else {
                     // Increment failed attempts
-                    $stmt = $pdo->prepare("UPDATE users SET failed_attempts = failed_attempts + 1, lock_time = IF(failed_attempts >= 2, NOW(), NULL) WHERE id = ?");
+                    $stmt = $this->pdo->prepare("UPDATE users SET failed_attempts = failed_attempts + 1, lock_time = IF(failed_attempts >= 2, NOW(), NULL) WHERE id = ?");
                     $stmt->execute([$user['id']]);
                     echo "Feil e-post eller passord. Prøv igjen.";
                     return;
