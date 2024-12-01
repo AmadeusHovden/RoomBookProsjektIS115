@@ -1,3 +1,7 @@
+<?php
+require_once '../privat/config.php'; // Include the base URL
+?>
+
 <h1>Om oss</h1>
 <section class="hero">
 
@@ -11,7 +15,7 @@
         </div>
 
         <div class="bilde">
-            <img src="site/img/om.jpg" alt="Norkap Luxury Hotel" class="hotel-bilde">
+            <img src="<?php echo BASE_URL; ?>/img/om.jpg" alt="Norkap Luxury Hotel" class="hotel-bilde">
         </div>
     </div>
 

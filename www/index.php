@@ -13,6 +13,7 @@
     <?php
 session_start(); // Start session at the top of the file
 
+require_once '../privat/config.php';
 // Include necessary controllers
 require_once '../privat/Controllers/LoginController.php';
 require_once '../privat/Controllers/LogoutController.php';
