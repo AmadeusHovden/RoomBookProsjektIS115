@@ -45,14 +45,16 @@
         case 'contact':
             require '../privat/Views/pages/contact.php';
             break;
-        case 'login':
-            $controller = new LoginController();
-            $controller->login();
-            break;
-        case 'logout':
-            $controller = new LogoutController();
-            $controller->logout();
-            break;
+            case 'login':
+                // Instantiate LoginController with $pdo
+                $loginController = new LoginController($pdo);
+                $loginController->login();
+                break;
+            case 'logout':
+                // Instantiate LogoutController
+                $logoutController = new LogoutController();
+                $logoutController->logout();
+                break;
         case 'admin/profile':
             if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                 require '../privat/Views/admin/profile.php';

@@ -3,15 +3,15 @@
 <section class="hero">
     <form class="booking-form" method="post" action="index.php?page=home">
         <div class="input-group">
-            <label for="date-from">Dato Fra:</label>
-            <input type="date" id="date-from" name="date-from" placeholder="Velg dato" required
-                   value="<?php echo htmlspecialchars($_POST['date-from'] ?? ''); ?>">
+            <label for="date_from">Dato Fra:</label>
+            <input type="date" id="date_from" name="date_from" placeholder="Velg dato" required
+                   value="<?php echo htmlspecialchars($_POST['date_from'] ?? ''); ?>">
         </div>
 
         <div class="input-group">
-            <label for="date-to">Dato Til:</label>
-            <input type="date" id="date-to" name="date-to" placeholder="Velg dato" required
-                   value="<?php echo htmlspecialchars($_POST['date-to'] ?? ''); ?>">
+            <label for="date_to">Dato Til:</label>
+            <input type="date" id="date_to" name="date_to" placeholder="Velg dato" required
+                   value="<?php echo htmlspecialchars($_POST['date_to'] ?? ''); ?>">
         </div>
 
         <div class="input-group">
@@ -51,8 +51,8 @@
                         <p>Pris per natt: <?php echo number_format($room['price_per_night'], 2, ',', ' '); ?> NOK</p>
                         <form method="post" action="index.php?page=booking/details">
                             <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">
-                            <input type="hidden" name="date-from" value="<?php echo htmlspecialchars($_POST['date-from']); ?>">
-                            <input type="hidden" name="date-to" value="<?php echo htmlspecialchars($_POST['date-to']); ?>">
+                            <input type="hidden" name="date_from" value="<?php echo htmlspecialchars($_POST['date_from']); ?>">
+                            <input type="hidden" name="date_to" value="<?php echo htmlspecialchars($_POST['date_to']); ?>">
                             <button class="room-button">Velg Rom</button>
                         </form>
                     </div>

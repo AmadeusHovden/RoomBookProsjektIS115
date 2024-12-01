@@ -9,8 +9,8 @@ class BookingController {
     }
 
     public function search() {
-        $dateFrom = $_POST['date-from'] ?? null;
-        $dateTo = $_POST['date-to'] ?? null;
+        $dateFrom = $_POST['date_from'] ?? null;
+        $dateTo = $_POST['date_to'] ?? null;
         $adults = $_POST['adults'] ?? null;
         $children = isset($_POST['children']) && $_POST['children'] !== '' ? $_POST['children'] : 0; // Default to 0
 
@@ -25,8 +25,8 @@ class BookingController {
 
     public function details() {
         $roomId = $_POST['room_id'];
-        $dateFrom = $_POST['date-from'];
-        $dateTo = $_POST['date-to'];
+        $dateFrom = $_POST['date_from'];
+        $dateTo = $_POST['date_to'];
 
         $room = $this->roomsModel->getRoomDetails($roomId);
 
@@ -38,8 +38,8 @@ class BookingController {
 
     public function confirm() {
         $roomId = $_POST['room_id'] ?? null;
-        $dateFrom = $_POST['date_from'] ?? null;
-        $dateTo = $_POST['date_to'] ?? null;
+        $dateFrom = $_POST['date_from'] ?? $_POST['date_from'] ?? null;
+        $dateTo = $_POST['date_to'] ?? $_POST['date_to'] ?? null;
         $adults = $_POST['adults'] ?? 1; // Default to 1 adult
         $children = $_POST['children'] ?? 0; // Default to 0 children
         $totalPrice = $_POST['total_price'] ?? null;
