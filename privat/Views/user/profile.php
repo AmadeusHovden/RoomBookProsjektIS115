@@ -1,5 +1,4 @@
 <?php
-session_start(); // Start session to access session variables
 
 // Check if the user is logged in and has the role 'bruker'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
