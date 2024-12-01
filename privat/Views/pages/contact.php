@@ -1,10 +1,6 @@
-
-<!--KAN LEGGE TIL MASSE PHP HER SOM VALIDERER FORMEN OG FAKTISK SENDER MAIL.  -->
-
 <h1>Kontakt oss</h1>
 
 <section class="hero">
-    <p>Føl deg fri til å kontakte oss når som helst.</p>
     <form action="send_mail.php" method="post" class="contact-form">
         <div class="form-group">
             <label for="name">Navn:</label>
@@ -24,11 +20,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="message">Beskrivelse:</label>
-            <textarea id="message" name="message" rows="5" placeholder="Skriv din melding her..." required></textarea>
+            <label for="message">Melding:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Din melding..." required></textarea>
         </div>
-
         <button type="submit" class="search-button">Send</button>
-
     </form>
 </section>
