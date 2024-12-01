@@ -4,7 +4,7 @@
 $host = 'localhost'; // Databasevert
 $db = 'room_booking_system'; // Databasenavn
 $user = 'root'; // Standardbrukeren i XAMPP
-$pass = ''; // Standardpassord for root-brukeren i XAMPP
+$pass = 'Sander123'; // Standardpassord for root-brukeren i XAMPP
 
 try {
     // Opprette en ny PDO-tilkobling til databasen

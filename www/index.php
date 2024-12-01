@@ -16,6 +16,7 @@ session_start(); // Start session at the top of the file
 // Include necessary controllers
 require_once '../privat/Controllers/LoginController.php';
 require_once '../privat/Controllers/LogoutController.php';
+require_once '../privat/Controllers/RegisterController.php';
 
 $page = $_GET['page'] ?? 'home';
 
@@ -56,6 +57,10 @@ switch ($page) {
             exit();
         }
         break;
+        case 'register':
+            $controller = new RegisterController();
+            $controller->register();
+            break;
     default:
         echo '<h1>404 - Page Not Found</h1>';
         break;
