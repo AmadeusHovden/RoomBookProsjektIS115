@@ -1,4 +1,5 @@
 <?php
+
 // Check if the user is logged in and has the role 'bruker'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
     // Redirect to login page if not logged in or wrong role

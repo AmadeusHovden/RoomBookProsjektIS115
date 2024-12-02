@@ -11,18 +11,25 @@
 
     <main>
     <?php
+    // Aktiver feilvisning for debugging
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
+
+    // Start session for å håndtere brukerinnlogging
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     require_once '../privat/config.php';
     // models
     require_once '../privat/Models/db.php';
     require_once '../privat/Models/RoomsModel.php';
-    //controllers
+    // controllers
     require_once '../privat/Controllers/LoginController.php';
     require_once '../privat/Controllers/LogoutController.php';
     require_once '../privat/Controllers/BookingController.php';
+    require_once '../privat/Controllers/RegisterController.php';
 
     $page = $_GET['page'] ?? 'home';
 
@@ -36,25 +43,37 @@
             }
             require '../privat/Views/pages/home.php';
             break;
+
         case 'allrooms':
             require '../privat/Views/pages/allrooms.php';
             break;
+
         case 'about':
             require '../privat/Views/pages/about.php';
             break;
+
         case 'contact':
             require '../privat/Views/pages/contact.php';
             break;
-            case 'login':
-                // Instantiate LoginController with $pdo
-                $loginController = new LoginController($pdo);
-                $loginController->login();
-                break;
-            case 'logout':
-                // Instantiate LogoutController
-                $logoutController = new LogoutController();
-                $logoutController->logout();
-                break;
+
+        case 'login':
+            // Instantiate LoginController with $pdo
+            $loginController = new LoginController($pdo);
+            $loginController->login();
+            break;
+
+        case 'logout':
+            // Instantiate LogoutController
+            $logoutController = new LogoutController();
+            $logoutController->logout();
+            break;
+
+        case 'register':
+            // Kall RegisterController for å håndtere registrering
+            $controller = new RegisterController();
+            $controller->register();
+            break;
+
         case 'admin/profile':
             if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                 require '../privat/Views/admin/profile.php';
@@ -63,6 +82,7 @@
                 exit();
             }
             break;
+
         case 'user/profile':
             if (isset($_SESSION['role']) && $_SESSION['role'] === 'bruker') {
                 require '../privat/Views/user/profile.php';
@@ -71,14 +91,17 @@
                 exit();
             }
             break;
+
         case 'booking/details':
             $controller = new BookingController($pdo);
             $controller->details();
             break;
+
         case 'booking/confirm':
             $controller = new BookingController($pdo);
             $controller->confirm();
             break;
+
         default:
             echo "<h1>404 - Page Not Found</h1>";
             break;
