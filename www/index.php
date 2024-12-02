@@ -116,9 +116,14 @@
             }
             break;
 
+            case 'upload_profile_image':
+                $controller = new ProfileController($pdo);
+                $controller->uploadProfileImage();
+        
         case 'user/deleteBooking':
                 $profileController = new ProfileController($pdo);
                 $profileController->deleteBooking();
+
                 break;
 
         default:

@@ -1,6 +1,34 @@
 <section class="hero">
-    <h1>Velkommen, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
-    <br>
+  
+    <div class="profile-container">
+        <!-- Profilbilde Seksjon -->
+        <div class="profile-image-section">
+            <h1>Velkommen, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
+            <?php if (!empty($_SESSION['profile_image'])): ?>
+                <img src="../uploads/profile_images/<?php echo htmlspecialchars($_SESSION['profile_image']); ?>" alt="Profilbilde" class="profile-image">
+            <?php else: ?>
+                <p>Du har ikke lastet opp et profilbilde ennå.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Skjema for opplasting av profilbilde -->
+        <div class="upload-section">
+            <h2>Last opp nytt profilbilde</h2>
+            <form method="POST" action="index.php?page=upload_profile_image" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="profile_image">Velg bilde:</label>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
+                </div>
+                <button type="submit" class="search-button">Last opp bilde</button>
+            </form>
+        </div>
+
+        <!-- Tilbakemelding for opplasting -->
+        <?php if (!empty($message)): ?>
+            <div class="message"><?php echo htmlspecialchars($message); ?></div>
+        <?php endif; ?>
+    </div>
+
     <h2>Din profil</h2>
     <p><strong>Navn:</strong> <?php echo htmlspecialchars($_SESSION['name']); ?></p>
     <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION['email']); ?></p>

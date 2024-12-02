@@ -6,6 +6,7 @@ class ProfileController {
         $this->pdo = $pdo;
     }
 
+    // Metode for å endre passord
     public function changePassword() {
         // Start session if not already started
         if (session_status() === PHP_SESSION_NONE) {
@@ -117,3 +118,77 @@ class ProfileController {
     }
 }
 
+    // Metode for å laste opp profilbilde
+    public function uploadProfileImage() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    
+        $message = ''; 
+        $uploadDir = __DIR__ . '/../../uploads/profile_images/';
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg'];
+
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_image'])) {
+            $file = $_FILES['profile_image'];
+    
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                $message = "Det oppstod en feil under opplastingen.";
+            } elseif (!in_array($file['type'], $allowedTypes)) {
+                $message = "Bare JPEG, PNG og GIF er tillatt.";
+            } elseif ($file['size'] > 2 * 1024 * 1024) { 
+                $message = "Filen er for stor. Maks 2MB.";
+            } else {
+                $fileName = 'profile_' . $_SESSION['user_id'] . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filePath = $uploadDir . $fileName;
+    
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+    
+                if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                    try {
+                        $stmt = $this->pdo->prepare("UPDATE users SET profile_image = ? WHERE id = ?");
+                        if ($stmt->execute([$fileName, $_SESSION['user_id']])) {
+                            $_SESSION['profile_image'] = $fileName; 
+                            $message = "Profilbildet er oppdatert!";
+                        } else {
+                            $message = "Kunne ikke lagre bildet i databasen.";
+                        }
+                    } catch (PDOException $e) {
+                        $message = "Databasefeil: " . $e->getMessage();
+                    }
+                } else {
+                    $message = "Kunne ikke flytte filen.";
+                }
+            }
+        }
+    
+        include __DIR__ . '/../Views/user/profile.php';
+    }
+
+    // Metode for å vise profilen
+    public function viewProfile() {
+        // Start session if not already started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Hent brukerinformasjon fra databasen
+        try {
+            $stmt = $this->pdo->prepare("SELECT name, email, role, profile_image FROM users WHERE id = ?");
+            $stmt->execute([$_SESSION['user_id']]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                $_SESSION['name'] = $user['name'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['profile_image'] = $user['profile_image'] ?? null;
+            }
+        } catch (PDOException $e) {
+            echo "Databasefeil: " . $e->getMessage();
+        }
+
+        include __DIR__ . '/../Views/user/profile.php';
+    }
+}
