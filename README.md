@@ -1,15 +1,12 @@
 # RoomBookProsjektIS115
 Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 
-#### VIKTIGSTE NÅ FØR LEVERING:
-- Laste opp pdf/bilde funksjon, for bruker profil!
-- Laste ned pdf "FAKTURA" fra booking bekreftelsen.
-- Profil siden vise bookinger, tidligere bookinger, og loyalty programmet, med poeng og senere rabatt!.
+## Composer må lastes ned for å bruke ulike funksjoner i prosjektet
+
+
 - Admin siden vise alle bookinger i dato rekkefølger med alt informasjon i tabell! (Noe form for å registerre om de har sjekket in sjekket Ut?
 - Admin kunne se alle rom, endre info og gjøre de utilgjengelig
 - Admin gjøre om vanlig bruker til admin bruker!
-- Riktige error meldinger.
-- Heis og 1/2 etasje preferanser!
 
 
 ### Oppgaven:
