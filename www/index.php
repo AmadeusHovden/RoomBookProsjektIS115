@@ -10,84 +10,103 @@
     <?php include '../privat/Views/layouts/header.php'; ?>
 
     <main>
-        <?php
-        // Aktiver feilvisning for debugging
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
+    <?php
+    // Aktiver feilvisning for debugging
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-        // Start session for å håndtere brukerinnlogging
-        // Sjekk om økten allerede er startet
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+    // Start session for å håndtere brukerinnlogging
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
+    require_once '../privat/config.php';
+    // models
+    require_once '../privat/Models/db.php';
+    require_once '../privat/Models/RoomsModel.php';
+    // controllers
+    require_once '../privat/Controllers/LoginController.php';
+    require_once '../privat/Controllers/LogoutController.php';
+    require_once '../privat/Controllers/BookingController.php';
+    require_once '../privat/Controllers/RegisterController.php';
 
-        // Inkluder nødvendige kontroller
-        require_once '../privat/Controllers/LoginController.php';
-        require_once '../privat/Controllers/LogoutController.php';
-        require_once '../privat/Controllers/RegisterController.php';
+    $page = $_GET['page'] ?? 'home';
 
-        // Hent siden fra GET-parameter eller bruk 'home' som standard
-        $page = $_GET['page'] ?? 'home';
+    switch ($page) {
+        case 'home':
+            $availableRooms = [];
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Henter tilgjengelige rom fra BookingController
+                $controller = new BookingController($pdo);
+                $availableRooms = $controller->search();
+            }
+            require '../privat/Views/pages/home.php';
+            break;
 
-        // Routing basert på siden som er valgt
-        switch ($page) {
-            case 'home':
-                require '../privat/Views/pages/home.php';
-                break;
+        case 'allrooms':
+            require '../privat/Views/pages/allrooms.php';
+            break;
 
-            case 'allrooms':
-                require '../privat/Views/pages/allrooms.php';
-                break;
+        case 'about':
+            require '../privat/Views/pages/about.php';
+            break;
 
-            case 'about':
-                require '../privat/Views/pages/about.php';
-                break;
+        case 'contact':
+            require '../privat/Views/pages/contact.php';
+            break;
 
-            case 'contact':
-                require '../privat/Views/pages/contact.php';
-                break;
+        case 'login':
+            // Instantiate LoginController with $pdo
+            $loginController = new LoginController($pdo);
+            $loginController->login();
+            break;
 
-            case 'login':
-                $controller = new LoginController();
-                $controller->login();
-                break;
+        case 'logout':
+            // Instantiate LogoutController
+            $logoutController = new LogoutController();
+            $logoutController->logout();
+            break;
 
-            case 'logout':
-                $controller = new LogoutController();
-                $controller->logout();
-                break;
+        case 'register':
+            // Kall RegisterController for å håndtere registrering
+            $controller = new RegisterController();
+            $controller->register();
+            break;
 
-            case 'register':
-                // Kall RegisterController for å håndtere registrering
-                $controller = new RegisterController();
-                $controller->register();
-                break;
+        case 'admin/profile':
+            if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+                require '../privat/Views/admin/profile.php';
+            } else {
+                header("Location: index.php?page=login");
+                exit();
+            }
+            break;
 
-            case 'admin/profile':
-                if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-                    require '../privat/Views/admin/profile.php';
-                } else {
-                    header("Location: index.php?page=login");
-                    exit();
-                }
-                break;
+        case 'user/profile':
+            if (isset($_SESSION['role']) && $_SESSION['role'] === 'bruker') {
+                require '../privat/Views/user/profile.php';
+            } else {
+                header("Location: index.php?page=login");
+                exit();
+            }
+            break;
 
-            case 'user/profile':
-                if (isset($_SESSION['role']) && $_SESSION['role'] === 'bruker') {
-                    require '../privat/Views/user/profile.php';
-                } else {
-                    header("Location: index.php?page=login");
-                    exit();
-                }
-                break;
+        case 'booking/details':
+            $controller = new BookingController($pdo);
+            $controller->details();
+            break;
 
-            default:
-                echo '<h1>404 - Page Not Found</h1>';
-                break;
-        }
-        ?>
+        case 'booking/confirm':
+            $controller = new BookingController($pdo);
+            $controller->confirm();
+            break;
+
+        default:
+            echo "<h1>404 - Page Not Found</h1>";
+            break;
+    }
+    ?>
     </main>
 
     <?php include '../privat/Views/layouts/footer.php'; ?>

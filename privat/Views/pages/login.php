@@ -1,4 +1,3 @@
-
 <h1>Logg Inn</h1>
 <section class="hero">
 
