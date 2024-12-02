@@ -19,7 +19,7 @@ class RegisterController {
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
 
-            // Validation
+            // Validdering
             if (empty($name)) {
                 $errors['name'] = "Navn er obligatorisk.";
             } elseif (!preg_match("/^[a-zA-ZæøåÆØÅ\s]+$/", $name)) {
