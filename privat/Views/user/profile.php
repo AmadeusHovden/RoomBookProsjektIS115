@@ -11,8 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
     <br>
     <h2>Din profil</h2>
     <p><strong>Navn:</strong> <?php echo htmlspecialchars($_SESSION['name']); ?></p>
-    <p><strong>Rolle:</strong> <?php echo htmlspecialchars($_SESSION['role']); ?></p>
-    <p><strong>Bruker-ID:</strong> <?php echo htmlspecialchars($_SESSION['user_id']); ?></p>
+    <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION['email']); ?></p>
     <br>
     <h2>Handlinger</h2>
     <!-- Knapp for å navigere til passordendringsskjemaet -->
@@ -26,5 +25,4 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
         <button type="submit" class="search-button">Logg ut</button>
     </form>
 </section>
-
 

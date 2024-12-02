@@ -54,6 +54,8 @@ class RegisterController {
                             $_SESSION['user_id'] = $this->pdo->lastInsertId();
                             $_SESSION['name'] = $name;
                             $_SESSION['role'] = 'bruker';
+                            $_SESSION['email'] = $email;
+
 
                             header("Location: index.php?page=user/profile");
                             exit();

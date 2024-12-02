@@ -44,6 +44,8 @@ class LoginController {
                             $_SESSION['user_id'] = $user['id'];
                             $_SESSION['name'] = $user['name'];
                             $_SESSION['role'] = $user['role'];
+                            $_SESSION['email'] = $user['email'];
+                            error_log("Session set: " . print_r($_SESSION, true));
 
                             // Redirect
                             $redirectPage = $user['role'] === 'admin' ? 'admin/profile' : 'user/profile';
