@@ -30,6 +30,7 @@
     require_once '../privat/Controllers/LogoutController.php';
     require_once '../privat/Controllers/BookingController.php';
     require_once '../privat/Controllers/RegisterController.php';
+    require_once '../privat/Controllers/ProfileController.php';
 
     $page = $_GET['page'] ?? 'home';
 
@@ -100,6 +101,11 @@
                 $controller = new BookingController($pdo);
                 $controller->confirmation();
                 break;
+        
+          case 'change_password':
+        $controller = new ProfileController();
+        $controller->changePassword();
+        break;
 
         default:
             echo "<h1>404 - Page Not Found</h1>";
