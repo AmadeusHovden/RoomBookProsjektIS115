@@ -83,14 +83,15 @@
             }
             break;
 
-        case 'user/profile':
-            if (isset($_SESSION['role']) && $_SESSION['role'] === 'bruker') {
-                require '../privat/Views/user/profile.php';
-            } else {
-                header("Location: index.php?page=login");
-                exit();
-            }
-            break;
+            case 'user/profile':
+                if (isset($_SESSION['role']) && $_SESSION['role'] === 'bruker') {
+                    $profileController = new ProfileController($pdo);
+                    $profileController->showProfile();
+                } else {
+                    header("Location: index.php?page=login");
+                    exit();
+                }
+                break;
 
         case 'booking/details':
             $controller = new BookingController($pdo);
@@ -114,6 +115,11 @@
                 $controller->downloadConfirmationPDF($bookingID);
             }
             break;
+
+        case 'user/deleteBooking':
+                $profileController = new ProfileController($pdo);
+                $profileController->deleteBooking();
+                break;
 
         default:
             echo "<h1>404 - Page Not Found</h1>";
