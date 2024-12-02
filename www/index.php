@@ -31,6 +31,7 @@
     require_once '../privat/Controllers/BookingController.php';
     require_once '../privat/Controllers/RegisterController.php';
     require_once '../privat/Controllers/ProfileController.php';
+    require_once '../privat/Controllers/AdminController.php';
 
     $page = $_GET['page'] ?? 'home';
 
@@ -125,6 +126,25 @@
                 $profileController->deleteBooking();
 
                 break;
+                case 'admin/panel':
+                    $adminController = new AdminController($pdo);
+                    $adminController->showPanel();
+                    break;
+                
+                case 'admin/updateUserRole':
+                    $adminController = new AdminController($pdo);
+                    $adminController->updateUserRole();
+                    break;
+                
+                case 'admin/updateRoomDetails':
+                    $adminController = new AdminController($pdo);
+                    $adminController->updateRoomDetails();
+                    break;
+                
+                    case 'admin/markRoomUnavailable':
+                        $adminController = new AdminController($pdo);
+                        $adminController->markRoomUnavailable();
+                        break;
 
         default:
             echo "<h1>404 - Page Not Found</h1>";
