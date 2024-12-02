@@ -17,6 +17,15 @@
             <label for="confirm_password">Bekreft passord:</label>
             <input type="password" id="confirm_password" name="confirm_password" placeholder="Bekreft passordet" required>
         </div>
+
+        <?php if (!empty($errors)): ?>
+            <div class="error-messages">
+            <?php foreach ($errors as $error): ?>
+            <p class="error"><?php echo htmlspecialchars($error); ?></p>
+            <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+        
         <button type="submit" class="search-button">Registrer</button>
     </form>
 </section>
