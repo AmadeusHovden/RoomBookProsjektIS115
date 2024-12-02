@@ -1,10 +1,17 @@
 <?php
 class LogoutController {
+    // Metode for å logge ut brukeren
     public function logout() {
-        session_start(); // Start the session to destroy it
-        session_unset();  // Clear all session variables
-        session_destroy(); // Destroy the session
-        header("Location: index.php?page=login"); // Redirect to login page
-        exit();
+        session_start(); // Starter økten
+
+        session_unset();  // Fjerner alle sesjonsvariabler som er satt
+       
+
+        session_destroy(); // Ødelegger selve økten
+       
+
+        // Omdirigerer brukeren til innloggingssiden
+        header("Location: index.php?page=login");
+        exit(); // Sørger for at ingen ytterligere kode kjører etter omdirigeringen
     }
 }
