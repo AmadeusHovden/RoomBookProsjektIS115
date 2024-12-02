@@ -1,13 +1,4 @@
 <?php
-
-// Check if the user is logged in and has the role 'bruker'
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
-    // Redirect to login page if not logged in or wrong role
-    header("Location: index.php?page=login");
-    exit();
-}
-?>
-<?php
 // Sjekk om brukeren er logget inn og har rollen 'bruker'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
     // Omdiriger til innloggingssiden hvis ikke logget inn eller feil rolle
@@ -27,12 +18,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
     <!-- Knapp for å navigere til passordendringsskjemaet -->
     <form method="GET" action="index.php">
         <input type="hidden" name="page" value="change_password">
-        <button type="submit" class="change-password-button">Endre passord</button>
+        <button type="submit" class="search-button">Endre passord</button>
     </form>
     <br>
     <!-- Knapp for å logge ut -->
     <form method="POST" action="index.php?page=logout">
-        <button type="submit" class="logout-button">Logg ut</button>
+        <button type="submit" class="search-button">Logg ut</button>
     </form>
 </section>
 

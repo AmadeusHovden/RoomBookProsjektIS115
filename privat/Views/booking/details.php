@@ -1,8 +1,11 @@
 <h1>Detaljer om Booking</h1>
 <section class="hero">
     <h2>Rom: <?php echo htmlspecialchars($room['name']); ?></h2>
+    <br>
     <p>Beskrivelse: <?php echo htmlspecialchars($room['description']); ?></p>
+    <br>
     <p>Totalt: <?php echo number_format($totalPrice, 2, ',', ' '); ?> NOK</p>
+    <br>
 
     <?php if (!isset($_SESSION['user_id'])) { ?>
         <!-- Guest Form -->
@@ -21,9 +24,9 @@
         <input type="email" id="guest_email" name="guest_email" required>
     <?php } ?>
 
-    <button type="submit">Fullfør Booking</button>
+    <button type="submit" class="search-button">Fullfør Booking</button>
 </form>
-        <p>Har du allerede en bruker? <a href="index.php?page=login">Logg inn her</a></p>
+        
     <?php } else { ?>
         <!-- Logged-In User -->
         <form method="post" action="index.php?page=booking/confirmation">
@@ -33,7 +36,7 @@
             <input type="hidden" name="date_to" value="<?php echo htmlspecialchars($dateTo ?? ''); ?>">
             <input type="hidden" name="adults" value="<?php echo htmlspecialchars($adults ?? '1'); ?>">
             <input type="hidden" name="children" value="<?php echo htmlspecialchars($children ?? '0'); ?>">
-            <button type="submit">Fullfør Booking</button>
+            <button type="submit" class="search-button">Fullfør Booking</button>
         </form>
     <?php } ?>
 </section>

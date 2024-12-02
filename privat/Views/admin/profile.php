@@ -16,7 +16,14 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             <p><strong>Bruker-ID:</strong> <?php echo htmlspecialchars($_SESSION['user_id']); ?></p>
     <br>
             <h2>Handlinger</h2>
+            <!-- Knapp for å navigere til passordendringsskjemaet -->
+            <form method="GET" action="index.php">
+                <input type="hidden" name="page" value="change_password">
+                <button type="submit" class="search-button">Endre passord</button>
+            </form>
+            <br>
+            <!-- Knapp for å logge ut -->
             <form method="POST" action="index.php?page=logout">
-                <button type="submit" class="logout-button">Logg ut</button>
+                <button type="submit" class="search-button">Logg ut</button>
             </form>
         </section>

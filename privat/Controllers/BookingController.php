@@ -1,5 +1,7 @@
 <?php
 
+use setasign\Fpdi\Fpdi;
+
 class BookingController {
     private $roomsModel;
 
@@ -105,5 +107,74 @@ class BookingController {
     
         // Pass data to the confirmation view
         require __DIR__ . '/../Views/booking/confirmation.php';
+    }
+
+    public function downloadConfirmationPDF($bookingID) {
+        require_once __DIR__ . '/../../vendor/autoload.php';
+        global $pdo;
+    
+        $stmt = $pdo->prepare("SELECT * FROM bookings WHERE id = ?");
+        $stmt->execute([$bookingID]);
+        $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$booking) {
+            die("Booking ikke funnet.");
+        }
+    
+        // Ensure Generated folder exists
+        $generatedPath = __DIR__ . '/../Generated/';
+        if (!file_exists($generatedPath)) {
+            mkdir($generatedPath, 0777, true);
+        }
+    
+        // Create PDF
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+    
+        // Import the template
+        $templatePath = __DIR__ . '/../Templates/fakturamal.pdf';
+        $pdf->setSourceFile($templatePath);
+        $tplIdx = $pdf->importPage(1);
+        $pdf->useTemplate($tplIdx);
+    
+        // Include logo
+        $logoPath = __DIR__ . '/../../www/img/logo2.png';
+        if (file_exists($logoPath)) {
+            $pdf->Image($logoPath, 10, 10, 50);
+        }
+    
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetTextColor(0, 0, 0);
+    
+        // Insert booking details
+        $pdf->SetXY(50, 50);
+        $pdf->Write(10, "Booking ID: " . $booking['id']);
+    
+        $pdf->SetXY(50, 60);
+        $pdf->Write(10, "Navn: " . $booking['guest_name']);
+    
+        $pdf->SetXY(50, 70);
+        $pdf->Write(10, "E-post: " . $booking['guest_email']);
+    
+        $pdf->SetXY(50, 80);
+        $pdf->Write(10, "Rom: " . $booking['room_id']);
+    
+        $pdf->SetXY(50, 90);
+        $pdf->Write(10, "Fra: " . $booking['check_in']);
+    
+        $pdf->SetXY(50, 100);
+        $pdf->Write(10, "Til: " . $booking['check_out']);
+    
+        $pdf->SetXY(50, 110);
+        $pdf->Write(10, "Totalt: " . $booking['total_price'] . " NOK");
+    
+        // Save PDF to Generated folder
+        $pdfOutputPath = $generatedPath . "booking_{$bookingID}.pdf";
+        $pdf->Output($pdfOutputPath, 'F');
+    
+        // Send PDF for download
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="booking_confirmation.pdf"');
+        readfile($pdfOutputPath);
     }
 }

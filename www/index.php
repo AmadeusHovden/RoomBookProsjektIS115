@@ -107,6 +107,14 @@
             $profileController->changePassword();
         break;
 
+        case 'booking/download':
+            $bookingID = $_GET['bookingID'] ?? null;
+            if ($bookingID) {
+                $controller = new BookingController($pdo);
+                $controller->downloadConfirmationPDF($bookingID);
+            }
+            break;
+
         default:
             echo "<h1>404 - Page Not Found</h1>";
             break;
