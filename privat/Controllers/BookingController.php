@@ -99,6 +99,9 @@ class BookingController {
             ':children' => $children,
             ':totalPrice' => $totalPrice,
         ]);
+
+        // Retrieve the last inserted booking ID
+        $bookingID = $pdo->lastInsertId();
     
         // Pass data to the confirmation view
         require __DIR__ . '/../Views/booking/confirmation.php';
