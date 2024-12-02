@@ -8,10 +8,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 ?>
         <section class="hero">
-        <h1>Velkommen, Admin <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
+        <h1>Velkommen, <?php echo htmlspecialchars($_SESSION['name']); ?> (Admin)!</h1>
         <br>
             <h2>Dine detaljer</h2>
             <p><strong>Navn:</strong> <?php echo htmlspecialchars($_SESSION['name']); ?></p>
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION['email']); ?></p>
             <p><strong>Rolle:</strong> <?php echo htmlspecialchars($_SESSION['role']); ?></p>
             <p><strong>Bruker-ID:</strong> <?php echo htmlspecialchars($_SESSION['user_id']); ?></p>
     <br>

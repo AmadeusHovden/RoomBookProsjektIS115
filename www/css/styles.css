@@ -288,50 +288,20 @@ input, textarea, select {
     text-align: center;
 }
 
-.upload-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.upload-button:hover {
-    background-color: #45a049;
-}
-
-.details-section {
-    text-align: left;
-    margin-top: 20px;
-}
-
-.actions-section {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.action-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.action-button:hover {
-    background-color: #0056b3;
-}
-
 .message {
     color: green;
     font-size: 16px;
     margin-top: 10px;
 }
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-
+.delete-button:hover {
+    background-color: #c0392b;
+}
