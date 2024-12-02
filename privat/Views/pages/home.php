@@ -28,23 +28,24 @@
 
         <button type="submit" class="search-button">Søk</button>
     </form>
+    <br>
+    <!-- Display error if search fails -->
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($availableRooms)) { ?>
+        <p class="error">Ingen tilgjengelige rom.</p>
+        <p class="error">Prøv en annen dato eller endre antall personer</p>
+    <?php } ?>
 </section>
-
-<!-- Display error if search fails -->
-<?php if (!empty($searchError)) { ?>
-    <p class="error"><?php echo $searchError; ?></p>
-<?php } ?>
 
 <!-- Display available rooms if search succeeds -->
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($availableRooms)) { ?>
-    <h2>Tilgjengelige Rom</h2>
-    <section class="rooms">
+    <section class="hero">
+        <h2>Tilgjengelige Rom</h2>
         <?php foreach ($availableRooms as $room) { ?>
             <div class="room">
                 <div class="rom-content">
                     <img src="img/suite.jpg" alt="Rom bilde" class="rom-bilde">
                     <div class="romtekst">
-                        <h2><?php echo htmlspecialchars($room['name']); ?></h2>
+                        <h3><?php echo htmlspecialchars($room['name']); ?></h3>
                         <p><?php echo htmlspecialchars($room['description']); ?></p>
                         <p>Maks voksne: <?php echo htmlspecialchars($room['max_adults']); ?></p>
                         <p>Maks barn: <?php echo htmlspecialchars($room['max_children']); ?></p>
@@ -53,6 +54,7 @@
                             <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">
                             <input type="hidden" name="date_from" value="<?php echo htmlspecialchars($_POST['date_from']); ?>">
                             <input type="hidden" name="date_to" value="<?php echo htmlspecialchars($_POST['date_to']); ?>">
+                            <br>
                             <button class="room-button">Velg Rom</button>
                         </form>
                     </div>
@@ -60,6 +62,24 @@
             </div>
         <?php } ?>
     </section>
-<?php } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
-    <p>Ingen tilgjengelige rom for de valgte datoene.</p>
 <?php } ?>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const today = new Date().toISOString().split('T')[0];
+        const fromDateInput = document.getElementById("date_from");
+        const toDateInput = document.getElementById("date_to");
+
+        // Set minimum for "Dato Fra"
+        fromDateInput.setAttribute("min", today);
+
+        // Dynamically set minimum for "Dato Til"
+        fromDateInput.addEventListener("change", function() {
+            const fromDateValue = new Date(fromDateInput.value);
+            const minToDate = new Date(fromDateValue);
+            minToDate.setDate(minToDate.getDate() + 1);
+            toDateInput.setAttribute("min", minToDate.toISOString().split('T')[0]);
+        });
+    });
+</script>

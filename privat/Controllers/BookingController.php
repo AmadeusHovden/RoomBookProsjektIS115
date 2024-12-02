@@ -13,12 +13,38 @@ class BookingController {
         $dateTo = $_POST['date_to'] ?? null;
         $adults = $_POST['adults'] ?? null;
         $children = isset($_POST['children']) && $_POST['children'] !== '' ? $_POST['children'] : 0; // Default to 0
-
-        // Validate required fields
-        if (!$dateFrom || !$dateTo || !$adults) {
-            return ['error' => 'Vennligst fyll inn alle nødvendige feltene (Dato Fra, Dato Til og Antall Voksne).'];
+    
+        // Backend validation
+        $errors = [];
+    
+        if (!$dateFrom || !$dateTo) {
+            $errors[] = 'Vennligst fyll inn både Dato Fra og Dato Til.';
+        } else {
+            $dateFromObj = new DateTime($dateFrom);
+            $dateToObj = new DateTime($dateTo);
+            $today = new DateTime();
+    
+            if ($dateFromObj < $today->setTime(0, 0, 0)) {
+                $errors[] = 'Dato Fra kan ikke være tidligere enn dagens dato.';
+            }
+    
+            if ($dateToObj <= $dateFromObj) {
+                $errors[] = 'Dato Til må være senere enn Dato Fra.';
+            }
         }
-
+    
+        if (!$adults || $adults < 1) {
+            $errors[] = 'Antall voksne må være minst 1.';
+        }
+    
+        if ($children < 0) {
+            $errors[] = 'Antall barn kan ikke være negativt.';
+        }
+    
+        if (!empty($errors)) {
+            return ['error' => implode('<br>', $errors)];
+        }
+    
         // Get available rooms from the model
         return $this->roomsModel->getAvailableRooms($dateFrom, $dateTo, $adults, $children);
     }
