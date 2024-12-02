@@ -1,6 +1,16 @@
 # RoomBookProsjektIS115
 Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 
+#### VIKTIGSTE NÅ FØR LEVERING:
+- Laste opp pdf/bilde funksjon, for bruker profil!
+- Laste ned pdf "FAKTURA" fra booking bekreftelsen.
+- Profil siden vise bookinger, tidligere bookinger, og loyalty programmet, med poeng og senere rabatt!.
+- Admin siden vise alle bookinger i dato rekkefølger med alt informasjon i tabell! (Noe form for å registerre om de har sjekket in sjekket Ut?
+- Admin kunne se alle rom, endre info og gjøre de utilgjengelig
+- Admin gjøre om vanlig bruker til admin bruker!
+- Riktige error meldinger.
+- Heis og 1/2 etasje preferanser!
+
 
 ### Oppgaven:
 - lite motell med 25 rom til sammen. 
@@ -15,13 +25,6 @@ Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 - Dere må tenke gjennom hva gjester (både de som bor ofte og av og til) og motelleierne ville satt pris på i et slik system, prioritere ønsker og implementere så mye som dere klarer gjennom godt programmeringshåndverk.
 
 
-
-## Ekstra, ideer:
-- forslag til andre alternativer hvis room er booka.
-- Sending av skjema, på kontakt siden. 
-- nærme trapp/heis ?
-- annet som må være i hotell-system?
-
 ## Romtyper:
 3 Suite : 5 pers (2.etasje)
 5 Familierom : 4 pers (2.etasje)
@@ -29,8 +32,6 @@ Repo for Amadeus og sander til et RoomBookingSystem, et prosjektet i IS-115 Php.
 7 Enkeltrom : 1 pers (1.etasje)
 
 plass til totalt 52 pers.
-
-Kan velge dato fra nåtid frem til 2030.
 
 etter søk på rommene med dato, Gi bruker mulighet til å filtrere, både 1 eller 2 etasje, og nærme eller ikke nærme heis.
 
