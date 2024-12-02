@@ -103,8 +103,8 @@
                 break;
         
           case 'change_password':
-        $controller = new ProfileController();
-        $controller->changePassword();
+            $profileController = new ProfileController($pdo);
+            $profileController->changePassword();
         break;
 
         default:
