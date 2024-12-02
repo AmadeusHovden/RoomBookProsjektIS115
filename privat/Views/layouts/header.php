@@ -1,6 +1,3 @@
-<?php
-session_start(); // This must be included to access session variables
-?>
 <header>
     <div class="header-left">
         <a href="index.php?page=home">
