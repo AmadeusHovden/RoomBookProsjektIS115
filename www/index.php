@@ -115,6 +115,11 @@
             }
             break;
 
+            case 'upload_profile_image':
+                $controller = new ProfileController($pdo);
+                $controller->uploadProfileImage();
+                break;
+
         default:
             echo "<h1>404 - Page Not Found</h1>";
             break;
