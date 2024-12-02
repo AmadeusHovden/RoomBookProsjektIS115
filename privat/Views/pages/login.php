@@ -5,6 +5,14 @@
     <h4>Logg inn eller Registrer bruker for å samle poeng</h4>
 </div>
 
+<?php if (!empty($errors)): ?>
+    <div class="error-messages">
+        <?php foreach ($errors as $error): ?>
+            <p class="error"><?php echo htmlspecialchars($error); ?></p>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
 <div class="hero-content">
     <form method="POST" action="index.php?page=login">
         <label for="email">E-post:</label><br>

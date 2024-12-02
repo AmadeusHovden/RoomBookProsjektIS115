@@ -1,5 +1,3 @@
-
-
 <h1>Detaljer om Booking</h1>
 <section class="hero">
     <h2>Rom: <?php echo htmlspecialchars($room['name']); ?></h2>
@@ -8,7 +6,7 @@
 
     <?php if (!isset($_SESSION['user_id'])) { ?>
         <!-- Guest Form -->
-        <form method="post" action="index.php?page=booking/confirm">
+        <form method="post" action="index.php?page=booking/confirmation">
             <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">
             <input type="hidden" name="total_price" value="<?php echo htmlspecialchars($totalPrice); ?>">
             <input type="hidden" name="date_from" value="<?php echo htmlspecialchars($dateFrom ?? ''); ?>">
@@ -28,7 +26,7 @@
         <p>Har du allerede en bruker? <a href="index.php?page=login">Logg inn her</a></p>
     <?php } else { ?>
         <!-- Logged-In User -->
-        <form method="post" action="index.php?page=booking/confirm">
+        <form method="post" action="index.php?page=booking/confirmation">
             <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">
             <input type="hidden" name="total_price" value="<?php echo htmlspecialchars($totalPrice); ?>">
             <input type="hidden" name="date_from" value="<?php echo htmlspecialchars($dateFrom ?? ''); ?>">

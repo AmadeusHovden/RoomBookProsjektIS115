@@ -1,71 +1,72 @@
 <?php
 class RegisterController {
+    private $pdo;
+
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+
     public function register() {
-        // Sjekk om økten allerede er startet før du kaller session_start
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Oppdater filbanen til å være dynamisk
-        require_once __DIR__ . '/../Models/db.php';
+        $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
 
-            // Validering
-            if (empty($name) || empty($email) || empty($password) || empty($confirmPassword)) {
-                echo "<p style='color: red;'>Alle felt må fylles ut.</p>";
-                return;
+            // Validation
+            if (empty($name)) {
+                $errors['name'] = "Navn er obligatorisk.";
+            } elseif (!preg_match("/^[a-zA-ZæøåÆØÅ\s]+$/", $name)) {
+                $errors['name_format'] = "Navn kan kun inneholde bokstaver og mellomrom.";
             }
 
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo "<p style='color: red;'>Ugyldig e-postadresse.</p>";
-                return;
+            if (empty($email)) {
+                $errors['email'] = "E-post er obligatorisk.";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email_format'] = "Ugyldig e-postadresse.";
+            }
+
+            if (empty($password)) {
+                $errors['password'] = "Passord er obligatorisk.";
             }
 
             if ($password !== $confirmPassword) {
-                echo "<p style='color: red;'>Passordene samsvarer ikke.</p>";
-                return;
+                $errors['password_match'] = "Passordene samsvarer ikke.";
             }
 
-            try {
-                // Sjekk om e-posten allerede finnes
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
-                $stmt->execute([$email]);
-                if ($stmt->fetchColumn() > 0) {
-                    echo "<p style='color: red;'>E-postadressen er allerede registrert.</p>";
-                    return;
+            if (empty($errors)) {
+                try {
+                    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+                    $stmt->execute([$email]);
+                    if ($stmt->fetchColumn() > 0) {
+                        $errors['email_exists'] = "E-postadressen er allerede registrert.";
+                    } else {
+                        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+                        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'bruker')");
+                        if ($stmt->execute([$name, $email, $hashedPassword])) {
+                            $_SESSION['user_id'] = $this->pdo->lastInsertId();
+                            $_SESSION['name'] = $name;
+                            $_SESSION['role'] = 'bruker';
+
+                            header("Location: index.php?page=user/profile");
+                            exit();
+                        } else {
+                            $errors['insert'] = "Innsetting feilet: " . implode(", ", $stmt->errorInfo());
+                        }
+                    }
+                } catch (PDOException $e) {
+                    $errors['database'] = "Databasefeil: " . $e->getMessage();
                 }
-
-                // Krypter passordet
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-                // Sett inn brukeren i databasen
-                $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'bruker')");
-                if ($stmt->execute([$name, $email, $hashedPassword])) {
-                    // Få den nylig opprettede brukerens ID
-                    $userId = $pdo->lastInsertId();
-
-                    // Logg brukeren inn automatisk
-                    $_SESSION['user_id'] = $userId;
-                    $_SESSION['name'] = $name;
-                    $_SESSION['role'] = 'bruker'; // Brukerrollen fra spørringen
-
-                    // Redirect til profilsiden basert på rollen
-                    header("Location: index.php?page=user/profile");
-                    exit();
-                } else {
-                    echo "<p style='color: red;'>Innsetting feilet: " . implode(", ", $stmt->errorInfo()) . "</p>";
-                }
-            } catch (PDOException $e) {
-                echo "<p style='color: red;'>Databasefeil: " . $e->getMessage() . "</p>";
             }
-        } else {
-            // Oppdater filbanen for registreringsskjemaet
-            require_once __DIR__ . '/../Views/pages/register.php';
         }
+
+        require '../privat/Views/pages/register.php';
     }
 }

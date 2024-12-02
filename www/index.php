@@ -68,11 +68,10 @@
             $logoutController->logout();
             break;
 
-        case 'register':
-            // Kall RegisterController for å håndtere registrering
-            $controller = new RegisterController();
-            $controller->register();
-            break;
+            case 'register':
+                $registerController = new RegisterController($pdo);
+                $registerController->register();
+                break;
 
         case 'admin/profile':
             if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
@@ -97,10 +96,10 @@
             $controller->details();
             break;
 
-        case 'booking/confirm':
-            $controller = new BookingController($pdo);
-            $controller->confirm();
-            break;
+            case 'booking/confirmation':
+                $controller = new BookingController($pdo);
+                $controller->confirmation();
+                break;
 
         default:
             echo "<h1>404 - Page Not Found</h1>";

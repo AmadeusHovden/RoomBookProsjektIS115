@@ -1,3 +1,7 @@
+<?php
+session_start()
+?>
+
 <header>
     <div class="header-left">
         <a href="index.php?page=home">

@@ -36,7 +36,7 @@ class BookingController {
         require __DIR__ . '/../Views/booking/details.php';
     }
 
-    public function confirm() {
+    public function confirmation() {
         $roomId = $_POST['room_id'] ?? null;
         $dateFrom = $_POST['date_from'] ?? $_POST['date_from'] ?? null;
         $dateTo = $_POST['date_to'] ?? $_POST['date_to'] ?? null;
