@@ -51,5 +51,69 @@ class ProfileController {
 
         include __DIR__ . '/../Views/user/change_password.php';
     }
+
+    public function showProfile() {
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bruker') {
+            header("Location: index.php?page=login");
+            exit();
+        }
+
+        $userEmail = $_SESSION['email'];
+
+        // Fetch bookings for logged-in users or those with the same email as guest
+        $query = "
+            SELECT id AS booking_id, room_id, guest_name, guest_email, check_in, check_out, total_price 
+            FROM bookings 
+            WHERE guest_email = :email OR user_id = :userId
+            ORDER BY check_in ASC
+        ";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([':email' => $userEmail, ':userId' => $_SESSION['user_id']]);
+        $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Separate upcoming and past bookings
+        $upcomingBookings = [];
+        $pastBookings = [];
+        $currentDate = new DateTime();
+
+        foreach ($bookings as $booking) {
+            $checkOutDate = new DateTime($booking['check_out']);
+            if ($checkOutDate >= $currentDate) {
+                $upcomingBookings[] = $booking;
+            } else {
+                $pastBookings[] = $booking;
+            }
+        }
+
+        // Pass bookings data to the view
+        include __DIR__ . '/../Views/user/profile.php';
+    }
+
+    public function deleteBooking() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
+            $bookingId = $_POST['booking_id'];
+    
+            try {
+                // Delete the booking from the database
+                $stmt = $this->pdo->prepare("DELETE FROM bookings WHERE id = :bookingId AND (guest_email = :email OR user_id = :userId)");
+                $stmt->execute([
+                    ':bookingId' => $bookingId,
+                    ':email' => $_SESSION['email'],
+                    ':userId' => $_SESSION['user_id']
+                ]);
+    
+                if ($stmt->rowCount() > 0) {
+                    $_SESSION['message'] = "Booking med ID $bookingId ble slettet.";
+                } else {
+                    $_SESSION['message'] = "Kunne ikke slette booking. Vennligst prøv igjen.";
+                }
+            } catch (PDOException $e) {
+                $_SESSION['message'] = "Databasefeil: " . $e->getMessage();
+            }
+        }
+    
+        header("Location: index.php?page=user/profile");
+        exit();
+    }
 }
 
