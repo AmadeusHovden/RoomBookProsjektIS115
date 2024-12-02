@@ -116,56 +116,55 @@ class ProfileController {
         header("Location: index.php?page=user/profile");
         exit();
     }
-}
 
     // Metode for å laste opp profilbilde
     public function uploadProfileImage() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-    
-        $message = ''; 
-        $uploadDir = __DIR__ . '/../../uploads/profile_images/';
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg'];
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-    
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_image'])) {
-            $file = $_FILES['profile_image'];
-    
-            if ($file['error'] !== UPLOAD_ERR_OK) {
-                $message = "Det oppstod en feil under opplastingen.";
-            } elseif (!in_array($file['type'], $allowedTypes)) {
-                $message = "Bare JPEG, PNG og GIF er tillatt.";
-            } elseif ($file['size'] > 2 * 1024 * 1024) { 
-                $message = "Filen er for stor. Maks 2MB.";
-            } else {
-                $fileName = 'profile_' . $_SESSION['user_id'] . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
-                $filePath = $uploadDir . $fileName;
-    
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
-    
-                if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                    try {
-                        $stmt = $this->pdo->prepare("UPDATE users SET profile_image = ? WHERE id = ?");
-                        if ($stmt->execute([$fileName, $_SESSION['user_id']])) {
-                            $_SESSION['profile_image'] = $fileName; 
-                            $message = "Profilbildet er oppdatert!";
-                        } else {
-                            $message = "Kunne ikke lagre bildet i databasen.";
-                        }
-                    } catch (PDOException $e) {
-                        $message = "Databasefeil: " . $e->getMessage();
+    $message = ''; 
+    $uploadDir = realpath(__DIR__ . '/../../uploads/profile_images/') . '/';
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg'];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_image'])) {
+        $file = $_FILES['profile_image'];
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            $message = "Upload error code: " . $file['error'];
+        } elseif (!in_array($file['type'], $allowedTypes)) {
+            $message = "Invalid file type. Allowed: JPEG, PNG, GIF.";
+        } elseif ($file['size'] > 2 * 1024 * 1024) {
+            $message = "File too large. Max size is 2MB.";
+        } else {
+            $fileName = 'profile_' . $_SESSION['user_id'] . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filePath = $uploadDir . $fileName;
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                try {
+                    $stmt = $this->pdo->prepare("UPDATE users SET profile_image = ? WHERE id = ?");
+                    if ($stmt->execute([$fileName, $_SESSION['user_id']])) {
+                        $_SESSION['profile_image'] = $fileName;
+                        $message = "Profile image updated!";
+                    } else {
+                        $message = "Failed to save image in database.";
                     }
-                } else {
-                    $message = "Kunne ikke flytte filen.";
+                } catch (PDOException $e) {
+                    $message = "Database error: " . $e->getMessage();
                 }
+            } else {
+                $message = "Failed to move uploaded file.";
             }
         }
-    
-        include __DIR__ . '/../Views/user/profile.php';
     }
+
+    include __DIR__ . '/../Views/user/profile.php';
+    exit();
+}
 
     // Metode for å vise profilen
     public function viewProfile() {
